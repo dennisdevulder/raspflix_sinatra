@@ -64,6 +64,7 @@ PLATFORMS
 DEPENDENCIES
   deluge
   haml
+  json
   omxplayer
   rake
   rencode-ruby
