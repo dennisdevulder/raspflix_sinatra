@@ -22,10 +22,16 @@ class Movie < ActiveRecord::Base
   end
 
   def progress
-    unless completed
-      details['progress'].round(1)
-    else
+    value = details['progress'].round(1)
+    update_column(:completed, true) if value == 100
+    if completed
       100.0
+    else
+      value
     end
+  end
+
+  def as_json(opts={})
+    {id: id, progress: progress}
   end
 end

@@ -36,13 +36,9 @@ get '/search' do
   haml :"movies/top", locals: {title: "Search results"}, layout: :"layouts/application"
 end
 
-get '/movie/:id/progress' do
-  movie = Movie.find(params[:id])
-  if movie.progress == 100
-    movie.update_attributes(completed: true)
-  end
-
-  haml "#{movie.progress}"
+get '/movies/progress.json' do
+  movies = Movie.find(params[:movie_ids].split(','))
+  movies.to_json
 end
 
 get '/movie/:id/download' do

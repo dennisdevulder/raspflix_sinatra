@@ -1,8 +1,10 @@
+require 'bundler/setup'
 require "sinatra"
 require "sinatra/activerecord"
 require "sinatra/flash"
 
 require "haml"
+require "json"
 require "themoviedb"
 require "torrent_api"
 require "omxplayer"

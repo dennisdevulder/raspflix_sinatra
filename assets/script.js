@@ -14,21 +14,30 @@ $(document).ready(function(){
   })
 
   window.setInterval(function(){
+    var movies = []
+
     $.each($('.active_torrent'), function(index, obj){
-      $.ajax({
-        url: '/movie/'+ obj.id + '/progress',
-        method: 'GET',
-        success: function(response){
-          var bar = $('#' + obj.id).children('div').children('div');
-	  if(response == '100.0'){
-	    bar.removeClass('progress-bar-striped');
-	    bar.html('Ready');
-	  }else{
-	    bar.html(response + '%');
-	    bar.css('width', response + '%')
-	  }
-	}
-      })
+      movies[index] = $(obj).attr('id')
     })
-  }, 2000)
+
+    if($('.active_torrent').size() > 0){
+      $.ajax({
+        url: '/movies/progress.json',
+        method: 'GET',
+        data: {"movie_ids":movies.toString()},
+        success: function(response){
+          $.each(JSON.parse(response), function(index, obj){
+            var bar = $('#' + obj.id).children('div').children('div');
+            if(obj.progress == 100.0){
+              bar.removeClass('progress-bar-striped');
+              bar.html('Ready');
+            }else{
+              bar.html(obj.progress + '%');
+              bar.css('width', obj.progress + '%')
+            }
+          })
+        }
+      })
+    }
+  }, 3000)
 })
