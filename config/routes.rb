@@ -1,5 +1,5 @@
 get '/' do
-  @movies = Movie.all
+  @movies = Movie.ordered
   haml :"movies/index", :layout => :"layouts/application"
 end
 
@@ -47,14 +47,21 @@ end
 
 get '/movie/:id/download' do
   @movie = Tmdb::Movie.detail(params[:id])
-  movie = Movie.where(identifier: @movie.id).first_or_create do |m|
+  movie = Movie.find_or_initialize_by(identifier: @movie.id) do |m|
     m.title = @movie.title
     m.poster_path = @movie.poster_path
   end
 
-  path = "#{Application::DAEMON.get_config['download_location']}/#{@movie.title.parameterize}"
-  daemon_id = Application::DAEMON.add_torrent_url(params[:torrent_uri], {"download_location" => path})
-  movie.update_attributes(daemon_id: daemon_id, path: path) unless daemon_id.nil?
+
+  begin
+    path = "#{Application::DAEMON.get_config['download_location']}/#{@movie.title.parameterize}"
+    daemon_id = Application::DAEMON.add_torrent_url(params[:torrent_uri], {"download_location" => path})
+    movie.daemon_id = daemon_id
+    movie.path = path
+    flash[:notice] = "Download successfully added." if movie.save
+  rescue
+    flash[:error] = "Oops, deluged is bitching about the torrent file. Better try another one"
+  end
 
   redirect '/'
 end
@@ -72,7 +79,7 @@ get '/action/:command' do
 end
 
 get '/daemon' do
-@daemon = Application::DAEMON
+  @daemon = Application::DAEMON
   haml :"daemon/index", layout: :"layouts/application"
 end
 

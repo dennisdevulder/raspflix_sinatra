@@ -1,5 +1,6 @@
 class Movie < ActiveRecord::Base
   scope :ordered, -> {order(title: :asc)}
+  validates_presence_of :daemon_id
 
   def daemon
     Application::DAEMON

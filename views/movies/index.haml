@@ -1,7 +1,14 @@
 .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
   %h2.sub-header My library
+  - if flash[:error].present?
+    .alert.alert-danger
+      %p= flash[:error]
+  - if flash[:notice].present?
+    .alert.alert-success
+      = flash[:notice]
+
   - @movies.in_groups_of(4, false) do |group|
-    .row
+    .row.bigger_row
       - group.each do |movie|
         - if movie.poster_path.present?
           .col-xs-3.item{class: (!movie.completed) ? 'active_torrent' : nil, id: movie.id}
