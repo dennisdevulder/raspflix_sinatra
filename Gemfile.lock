@@ -16,6 +16,7 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
+    deluge (1.0.0)
     haml (4.0.5)
       tilt
     hashugar (0.0.6)
@@ -35,6 +36,7 @@ GEM
     rack-protection (1.5.3)
       rack
     rake (10.3.2)
+    rencode-ruby (1.0.0)
     sinatra (1.4.5)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -58,9 +60,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  deluge
   haml
   omxplayer
   rake
+  rencode-ruby
   sinatra
   sinatra-activerecord
   sqlite3
