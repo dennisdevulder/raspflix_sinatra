@@ -18,7 +18,7 @@ class Movie < ActiveRecord::Base
   end
 
   def movie_files
-    Dir.glob("#{path}**/*[.mp4, .avi, .mkv, .h264, .mov, .wmv, .vob]")
+    Dir.glob("#{path}/**/*[.mp4, .avi, .mkv, .h264, .mov, .wmv, .vob]")
   end
 
   def progress
