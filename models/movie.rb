@@ -8,8 +8,7 @@ class Movie < ActiveRecord::Base
 
   def play
     movie_files.each do |file|
-      # system "#{ENV['VLC_EXECUTABLE_PATH']} #{path}"
-      system "omxplayer -o hdmi -r '#{file}'"
+      Omxplayer.instance.open(file, audio_output: 'hdmi')
     end
   end
 
