@@ -24,7 +24,7 @@ end
 get '/movies/:id/play' do
   movie = Movie.find params[:id]
   if movie.movie_files.any?
-    Thread.new{ movie.play }
+    movie.play
     redirect '/player'
   else
     redirect '/'
