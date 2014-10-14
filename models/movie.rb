@@ -8,7 +8,7 @@ class Movie < ActiveRecord::Base
 
   def play
     movie_files.each do |file|
-      Omxplayer.instance.open(file, audio_output: 'hdmi')
+      Omxplayer.instance.open(filename: file, audio_output: 'hdmi')
     end
   end
 
