@@ -8,7 +8,7 @@ require "json"
 require "themoviedb"
 require "torrent_api"
 require "omxplayer"
-require "deluge"
+require 'open_uri_redirections'
 
 require 'socket'
 
@@ -18,13 +18,15 @@ Omxplayer.class_eval do
     system "omxplayer -o hdmi -r \"#{filename}\" < /tmp/omxpipe &"
     action(:start)
   end
+
+  def stream(torrent_url)
+    system "stream_omxplayer #{torrent_url}"
+  end
 end
 
 class Application < Sinatra::Base
   enable :sessions
   Tmdb::Api.key('2433ca02f76e3becd9e1411ca69a028a')
-  DAEMON = Deluge.new
-  DAEMON.login 'admin', 'admin'
   Omxplayer.instance
 
   orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true
@@ -38,4 +40,5 @@ class Application < Sinatra::Base
 
   require './models/movie.rb'
   require './config/routes'
+  require "./patch/piratebay.rb"
 end

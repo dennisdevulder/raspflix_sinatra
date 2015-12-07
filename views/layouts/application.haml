@@ -33,10 +33,4 @@
           %ul.nav.nav-sidebar
             %li
               %a{href: '/'} My library
-          %ul.nav.nav-sidebar
-            %li
-              %a{href: '/daemon'} Daemon settings
-          %ul.nav.nav-sidebar
-            %li
-              %a{href: '#'}= "#{(Application::DAEMON.get_free_space(Application::DAEMON.get_config['download_location']).to_f / 1073741824).round(1)} GB available"
         = yield
