@@ -10,5 +10,5 @@ gem "rake"
 gem "themoviedb"
 gem "torrent_api"
 gem "omxplayer"
-gem 'deluge'
 gem 'rencode-ruby'
+gem 'open_uri_redirections'

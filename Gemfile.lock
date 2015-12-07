@@ -16,7 +16,6 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
-    deluge (1.0.0)
     haml (4.0.5)
       tilt
     hashugar (0.0.6)
@@ -32,6 +31,7 @@ GEM
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     omxplayer (0.4.1)
+    open_uri_redirections (0.2.1)
     rack (1.5.2)
     rack-protection (1.5.3)
       rack
@@ -62,10 +62,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  deluge
   haml
   json
   omxplayer
+  open_uri_redirections
   rake
   rencode-ruby
   sinatra
