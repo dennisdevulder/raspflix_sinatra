@@ -9,11 +9,10 @@ module Kat
       search_proc = lambda do |page|
 	 begin
           uri = URI(URI.encode(to_s page))
-	  puts uri
           req = Net::HTTP::Get.new(uri.path)
           res = Net::HTTP.start(uri.host, uri.port, use_ssl: true, verify_mode: 0).request(req)
-	  puts res
 
+	  puts "result code = #{res.code}"
 	  if res.code == '301'
 	    puts 'hit 301'
 	    path = Net::HTTP::Get.new(res.header['location'])
@@ -22,7 +21,11 @@ module Kat
 
 	  @pages = 0 and return if res.code == '404'
 
+	  puts 'continueing since it passes the 404 check'
+
 	  doc = Nokogiri::HTML(res.body)
+
+	  puts 'created doc'
 	  @results[page] = doc.xpath('//table[@class="data"]//tr[position()>1]/td[1]').map do |node|
 	    { path: href_of(node, 'a.torType'),
 	      title: node.css('a.cellMainLink').text,
@@ -34,6 +37,10 @@ module Kat
 	      seeds: (node = node.next_element).text.to_i,
 	      leeches: node.next_element.text.to_i }
 	  end
+
+	  puts 'created results'
+
+	  puts "result count = #{@results[page].count}"
 
 	  if @pages == -1
             p = doc.css('div.pages > a').last
