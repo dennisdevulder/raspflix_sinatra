@@ -1,0 +1,21 @@
+.col-xs-12.main
+  .container
+    %h2.sub-header= @movie.name
+    .col-lg-3.col-xs-6.series
+      - if @movie.poster_path.present?
+        %img{src: "http://image.tmdb.org/t/p/w396/#{@movie.poster_path}", class: 'fit'}
+      - else
+        %img{src: "http://placehold.it/396x594?text=#{@movie.title}", class: 'fit'}
+      - @movie.seasons.each_with_index do |season, index|
+        %a{href: "/series/#{@movie.id}/seasons/#{season.id}", class: 'btn btn-fit btn-default btn-lg toggle-torrents'}= "Season #{index + 1}"
+
+    .torrent_list.col-lg-9.col-xs-6{style: 'display: none;'}
+      %table.table.torrent_table
+        %tbody
+          - @torrents.each do |torrent|
+            %tr
+              %td= torrent.name
+              %td= "#{torrent.seeds} / #{torrent.leeches}"
+              %td= "#{(torrent.size / 1048567).round(1)} mb"
+              %td
+                %a{href: "/movie/#{@movie.id}/download?torrent_uri=#{torrent.link}", class: 'btn btn-success'} download source

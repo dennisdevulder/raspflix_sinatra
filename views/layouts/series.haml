@@ -1,0 +1,33 @@
+!!!
+%html
+  %head
+    %title Raspflix
+    %link{href: '/assets/bootstrap.min.css', rel: 'stylesheet', type: 'text/css'}
+    %link{href: '/assets/dashboard.css', rel: 'stylesheet', type: 'text/css'}
+    %link{href: '/assets/override.css', rel: 'stylesheet', type: 'text/css'}
+
+    %script{src: '/assets/jquery.min.js'}
+    %script{src: '/assets/bootstrap.min.js'}
+    %script{src: '/assets/script.js'}
+    %script{src: '/assets/jquery.matchheight-min.js'}
+  %body
+    .navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle.collapsed{"data-target" => ".navbar-collapse", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{href: '/'} Raspflix
+        .navbar-collapse.collapse
+          %form.navbar-form.navbar-right{action: '/series/search'}
+            %input.form-control{:placeholder => "Search...", :type => "text", name: 'query'}/
+          %ul.nav.navbar-nav.navbar-left
+            %li
+              %a{href: '/'} Movies
+            %li.active
+              %a{href: '/series'} Series
+    .container-fluid
+      .row
+        = yield

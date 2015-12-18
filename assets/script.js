@@ -8,36 +8,13 @@ $(document).ready(function(){
     })
   });
 
+  $('#select_genre select').change(function(e){
+    e.preventDefault();
+    window.location = $(this).val();
+  });
+
   $('.toggle-torrents').click(function(e){
     e.preventDefault();
     $('.torrent_list').slideToggle();
   })
-
-  window.setInterval(function(){
-    var movies = []
-
-    $.each($('.active_torrent'), function(index, obj){
-      movies[index] = $(obj).attr('id')
-    })
-
-    if($('.active_torrent').size() > 0){
-      $.ajax({
-        url: '/movies/progress.json',
-        method: 'GET',
-        data: {"movie_ids":movies.toString()},
-        success: function(response){
-          $.each(JSON.parse(response), function(index, obj){
-            var bar = $('#' + obj.id).children('div').children('div');
-            if(obj.progress == 100.0){
-              bar.removeClass('progress-bar-striped');
-              bar.html('Ready');
-            }else{
-              bar.html(obj.progress + '%');
-              bar.css('width', obj.progress + '%')
-            }
-          })
-        }
-      })
-    }
-  }, 3000)
 })

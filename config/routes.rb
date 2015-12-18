@@ -1,16 +1,11 @@
 get '/' do
-  @movies = Movie.ordered
-  haml :"movies/index", :layout => :"layouts/application"
+  @movies = Tmdb::Movie.upcoming
+  haml :"movies/top", locals: {title: "Upcoming movies"}, layout: :"layouts/application"
 end
 
 get '/movies/top' do
   @movies = Tmdb::Movie.top_rated
   haml :"movies/top", locals: {title: "Movie top 20"}, layout: :"layouts/application"
-end
-
-get '/movies/new' do
-  @movies = Tmdb::Movie.upcoming
-  haml :"movies/top", locals: {title: "Upcoming movies"}, layout: :"layouts/application"
 end
 
 get '/movie/:id' do
@@ -31,35 +26,27 @@ get '/movies/:id/play' do
   end
 end
 
+get '/genres/:id' do
+  if params[:page].to_i <= 1
+    @movies = Tmdb::Genre.find(params[:id].capitalize).results
+  else
+    @movies = Tmdb::Genre.find(params[:id].capitalize).get_page(params[:page].to_i).results
+  end
+  haml :"movies/top", locals: {title: "#{params[:id].capitalize} movies"}, layout: :"layouts/application"
+end
+
+get '/genres/:id/more' do
+  if params[:page].to_i <= 1
+    @movies = Tmdb::Genre.find(params[:id].capitalize).get_page(2).results
+  else
+    @movies = Tmdb::Genre.find(params[:id].capitalize).get_page(params[:page].to_i).results
+  end
+  haml :"movies/async"
+end
+
 get '/search' do
   @movies = Tmdb::Movie.search(params[:query]).first(20)
   haml :"movies/top", locals: {title: "Search results"}, layout: :"layouts/application"
-end
-
-get '/movies/progress.json' do
-  movies = Movie.find(params[:movie_ids].split(','))
-  movies.to_json
-end
-
-get '/movie/:id/download' do
-  @movie = Tmdb::Movie.detail(params[:id])
-  movie = Movie.find_or_initialize_by(identifier: @movie.id) do |m|
-    m.title = @movie.title
-    m.poster_path = @movie.poster_path
-  end
-
-
-  begin
-    path = "#{Application::DAEMON.get_config['download_location']}/#{@movie.title.parameterize}"
-    daemon_id = Application::DAEMON.add_torrent_url(params[:torrent_uri], {"download_location" => path})
-    movie.daemon_id = daemon_id
-    movie.path = path
-    flash[:notice] = "Download successfully added." if movie.save
-  rescue
-    flash[:error] = "Oops, deluged is bitching about the torrent file. Better try another one"
-  end
-
-  redirect '/'
 end
 
 get '/player' do
@@ -74,15 +61,27 @@ get '/action/:command' do
   Omxplayer.instance.action params[:command]
 end
 
-get '/daemon' do
-  @daemon = Application::DAEMON
-  haml :"daemon/index", layout: :"layouts/application"
+get '/series' do
+  @movies = Tmdb::TV.popular
+  haml :"series/index", locals: {title: "Top rated series"}, layout: :"layouts/series"
 end
 
-post '/daemon' do
-  params.slice('download_location', 'stop_seed_ratio').each do |attr|
-    Application::DAEMON.set_config(attr[0] => attr[1])
-  end
+get '/series/:id' do
+  @movie = Tmdb::TV.detail(params[:id])
+  @torrents = TorrentApi.new(:pirate_bay, "#{@movie.name} S01E01").results
 
-  redirect '/daemon'
+  haml :"series/show", layout: :"layouts/series"
+end
+
+get '/series/:serie_id/seasons/:id' do
+  @movie = Tmdb::TV.detail(params[:serie_id])
+  @season = Tmdb::Season.detail(@movie.id, params[:id])
+  @torrents = TorrentApi.new(:pirate_bay, "#{@movie.name} S01E01").results
+
+  haml :"series/show", layout: :"layouts/series"
+end
+
+get '/series/search' do
+  @movies = Tmdb::TV.search(params[:query]).first(20)
+  haml :"series/index", locals: {title: "Search results"}, layout: :"layouts/series"
 end

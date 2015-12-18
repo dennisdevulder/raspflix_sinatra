@@ -1,5 +1,5 @@
 img.fit{width: 100%;max-height: 500px;}
-.item{margin-top: 20px; max-height: 500px;}
+.item{margin-top: 20px; max-height: 594px; overflow: hidden;}
 .no-padding{padding: 0px !important;}
 .no-margin{margin: 0px !important;}
 
@@ -24,4 +24,13 @@ img.fit{width: 100%;max-height: 500px;}
 
 .bigger_row{
   margin-top: 10px;
+}
+
+.pull-over{
+  position: absolute;
+  z-index: 1 !important;
+}
+
+.no-opacity{
+  z-index: 0 !important;
 }

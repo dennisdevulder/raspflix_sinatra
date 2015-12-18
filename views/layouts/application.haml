@@ -9,6 +9,7 @@
     %script{src: '/assets/jquery.min.js'}
     %script{src: '/assets/bootstrap.min.js'}
     %script{src: '/assets/script.js'}
+    %script{src: '/assets/jquery.matchheight-min.js'}
   %body
     .navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
       .container-fluid
@@ -22,15 +23,33 @@
         .navbar-collapse.collapse
           %form.navbar-form.navbar-right{action: '/search'}
             %input.form-control{:placeholder => "Search...", :type => "text", name: 'query'}/
+          %form.navbar-form.navbar-right{action: '#', id: "select_genre"}
+            %select.form-control{type: "select", name: 'genres'}
+              %option{value: '/', selected: true} Select a genre
+              %option{value: '/genres/action'} Action
+              %option{value: '/genres/adventure'} Adventure
+              %option{value: '/genres/animation'} Animation
+              %option{value: '/genres/comedy'} Comedy
+              %option{value: '/genres/crime'} Crime
+              %option{value: '/genres/documentary'} Documentary
+              %option{value: '/genres/drama'} Drama
+              %option{value: '/genres/family'} Family
+              %option{value: '/genres/fantasy'} Fantasy
+              %option{value: '/genres/foreign'} Foreign
+              %option{value: '/genres/history'} History
+              %option{value: '/genres/horror'} Horror
+              %option{value: '/genres/music'} Music
+              %option{value: '/genres/mystery'} Mystery
+              %option{value: '/genres/romance'} Romance
+              %option{value: '/genres/thriller'} Thriller
+              %option{value: '/genres/war'} War
+              %option{value: '/genres/western'} Western
+
+          %ul.nav.navbar-nav.navbar-left
+            %li.active
+              %a{href: '/'} Movies
+            %li
+              %a{href: '/series'} Series
     .container-fluid
       .row
-        .col-sm-3.col-md-2.sidebar
-          %ul.nav.nav-sidebar
-            %li
-              %a{href: '/movies/top'} Movie top 20
-            %li
-              %a{href: '/movies/new'} New movies
-          %ul.nav.nav-sidebar
-            %li
-              %a{href: '/'} My library
         = yield

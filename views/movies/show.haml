@@ -1,19 +1,22 @@
 .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
   %h2.sub-header= @movie.title
   .col-lg-3.col-xs-6.item
-    %img{src: "http://image.tmdb.org/t/p/w396/#{@movie.poster_path}", class: 'fit'}
-    %a{href: '#', class: 'btn btn-fit btn-primary btn-lg toggle-torrents'}Download
+    - if @movie.poster_path.present?
+      %img{src: "http://image.tmdb.org/t/p/w396/#{@movie.poster_path}", class: 'fit'}
+    - else
+      %img{src: "http://placehold.it/396x594?text=#{@movie.title}", class: 'fit'}
+    %a{href: '#', class: 'btn btn-fit btn-primary btn-lg toggle-torrents'}download
 
   .col-lg-9.col-xs-6.item.no-padding
     #slider.col-xs-12.no-padding
       #carousel-bounding-box
-        #myCarousel.carousel.slide
+        #mycarousel.carousel.slide
           .carousel-inner
             - @trailers.each_with_index do |trailer, index|
               .item.no-margin{class: "#{'active' if index == 0}"}
                 %iframe{:allowfullscreen => "true", :frameborder => "0", :height => "550", :src => "//www.youtube.com/embed/#{trailer.source}", :width => "100%"}
-          %a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel", :role => "button"}
-          %a.right.carousel-control{"data-slide" => "next", :href => "#myCarousel", :role => "button"}
+          %a.left.carousel-control{"data-slide" => "prev", :href => "#mycarousel", :role => "button"}
+          %a.right.carousel-control{"data-slide" => "next", :href => "#mycarousel", :role => "button"}
 
     .torrent_list.col-xs-12{style: 'display: none;'}
       %table.table.torrent_table
@@ -22,9 +25,9 @@
             %tr
               %td= torrent.name
               %td= "#{torrent.seeds} / #{torrent.leeches}"
-              %td= "#{(torrent.size / 1048567).round(1)} MB"
+              %td= "#{(torrent.size / 1048567).round(1)} mb"
               %td
-                %a{href: "/movie/#{@movie.id}/download?torrent_uri=#{torrent.link}", class: 'btn btn-success'} Download source
+                %a{href: "/movie/#{@movie.id}/download?torrent_uri=#{torrent.link}", class: 'btn btn-success'} download source
 
   :javascript
     $(document).ready(function(){
