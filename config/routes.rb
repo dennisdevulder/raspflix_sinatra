@@ -11,7 +11,7 @@ end
 get '/movie/:id' do
   @movie = Tmdb::Movie.detail(params[:id])
   @trailers = Tmdb::Movie.trailers(params[:id]).youtube.first(3)
-  @torrents = TorrentApi.new(:pirate_bay, @movie.title).results
+  @torrents = Kat.quick_search(@movie.title)
 
   haml :"movies/show", layout: :"layouts/application"
 end
@@ -68,9 +68,14 @@ end
 
 get '/series/:id' do
   @movie = Tmdb::TV.detail(params[:id])
-  @torrents = TorrentApi.new(:pirate_bay, "#{@movie.name} S01E01").results
+  @torrents = Kat.quick_search("#{@movie.name} S01E01")
 
   haml :"series/show", layout: :"layouts/series"
+end
+
+get '/movie/:id/download' do
+  system("stream #{params[:torrent_url]}");
+  halt 200
 end
 
 get '/series/:serie_id/seasons/:id' do

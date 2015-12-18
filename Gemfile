@@ -8,7 +8,7 @@ gem "haml"
 gem 'json'
 gem "rake"
 gem "themoviedb"
-gem "torrent_api"
+gem "kat"
 gem "omxplayer"
 gem 'rencode-ruby'
 gem 'open_uri_redirections'

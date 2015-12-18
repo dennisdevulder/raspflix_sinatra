@@ -6,7 +6,7 @@ require "sinatra/flash"
 require "haml"
 require "json"
 require "themoviedb"
-require "torrent_api"
+require "kat"
 require "omxplayer"
 require 'open_uri_redirections'
 
@@ -40,5 +40,4 @@ class Application < Sinatra::Base
 
   require './models/movie.rb'
   require './config/routes'
-  require "./patch/piratebay.rb"
 end

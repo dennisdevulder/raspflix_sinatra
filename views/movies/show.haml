@@ -1,13 +1,20 @@
 .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
   %h2.sub-header= @movie.title
-  .col-lg-3.col-xs-6.item
+  .col-lg-3.col-xs-6
     - if @movie.poster_path.present?
       %img{src: "http://image.tmdb.org/t/p/w396/#{@movie.poster_path}", class: 'fit'}
     - else
       %img{src: "http://placehold.it/396x594?text=#{@movie.title}", class: 'fit'}
-    %a{href: '#', class: 'btn btn-fit btn-primary btn-lg toggle-torrents'}download
 
-  .col-lg-9.col-xs-6.item.no-padding
+    %form{action: "/movies/#{@movie.id}/download", id: "torrent-value"}
+      %select{class: 'form-control'}
+        - @torrents.each do |torrent|
+          %option{value: "http:#{torrent[:download].split('?title')[0]}"}
+            = "[#{torrent[:seeds]}/#{torrent[:leeches]}] " + torrent[:title]
+
+    %a{href: '#', class: 'btn btn-fit btn-success btn-lg select-torrent'} Watch
+
+  .col-lg-9.col-xs-6.no-padding
     #slider.col-xs-12.no-padding
       #carousel-bounding-box
         #mycarousel.carousel.slide
@@ -17,17 +24,6 @@
                 %iframe{:allowfullscreen => "true", :frameborder => "0", :height => "550", :src => "//www.youtube.com/embed/#{trailer.source}", :width => "100%"}
           %a.left.carousel-control{"data-slide" => "prev", :href => "#mycarousel", :role => "button"}
           %a.right.carousel-control{"data-slide" => "next", :href => "#mycarousel", :role => "button"}
-
-    .torrent_list.col-xs-12{style: 'display: none;'}
-      %table.table.torrent_table
-        %tbody
-          - @torrents.each do |torrent|
-            %tr
-              %td= torrent.name
-              %td= "#{torrent.seeds} / #{torrent.leeches}"
-              %td= "#{(torrent.size / 1048567).round(1)} mb"
-              %td
-                %a{href: "/movie/#{@movie.id}/download?torrent_uri=#{torrent.link}", class: 'btn btn-success'} download source
 
   :javascript
     $(document).ready(function(){

@@ -13,8 +13,12 @@ $(document).ready(function(){
     window.location = $(this).val();
   });
 
-  $('.toggle-torrents').click(function(e){
+  $('.select-torrent').click(function(e){
     e.preventDefault();
-    $('.torrent_list').slideToggle();
-  })
+    var torrent_url = $('#torrent-value select').val();
+    $.ajax({
+      url: window.location.href + "/download?torrent_url=" + torrent_url,
+      type: 'GET'
+    })
+  });
 })
