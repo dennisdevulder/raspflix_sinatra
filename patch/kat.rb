@@ -1,31 +1,18 @@
+require 'rest-client'
+
 module Kat
   Search.class_eval do
     def search(page_num = 0)
       @error = nil
       @message = nil
 
-      puts 'test'
-
       search_proc = lambda do |page|
 	 begin
           uri = URI(URI.encode(to_s page))
-          req = Net::HTTP::Get.new(uri.path)
-          res = Net::HTTP.start(uri.host, uri.port, use_ssl: true, verify_mode: 0).request(req)
+	  response = RestClient.get(uri.to_s)
 
-	  puts "result code = #{res.code}"
-	  if res.code == '301'
-	    puts 'hit 301'
-	    path = Net::HTTP::Get.new(res.header['location'])
-	    res = Net::HTTP.start(uri.host) { |http| http.request path }
-	  end
+	  doc = Nokogiri::HTML(response)
 
-	  @pages = 0 and return if res.code == '404'
-
-	  puts 'continueing since it passes the 404 check'
-
-	  doc = Nokogiri::HTML(res.body)
-
-	  puts 'created doc'
 	  @results[page] = doc.xpath('//table[@class="data"]//tr[position()>1]/td[1]').map do |node|
 	    { path: href_of(node, 'a.torType'),
 	      title: node.css('a.cellMainLink').text,

@@ -9,6 +9,7 @@ gem 'json'
 gem "rake"
 gem "themoviedb"
 gem "kat"
+gem "rest-client"
 gem "omxplayer"
 gem 'rencode-ruby'
 gem 'open_uri_redirections'
