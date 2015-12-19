@@ -74,10 +74,7 @@ get '/series/:id' do
 end
 
 get '/movie/:id/download' do
-  File.open("/tmp/movie.torrent", 'w') do |file|
-    file.write open(params[:torrent_url]).read
-  end
-  system "stream"
+  system "stream #{params[:torrent_url]}"
   halt 200
 end
 
