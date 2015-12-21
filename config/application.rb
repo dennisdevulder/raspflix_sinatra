@@ -34,7 +34,7 @@ class Application < Sinatra::Base
   orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true
   UDPSocket.open do |s|
     s.connect '64.233.187.99', 1
-    puts "Connection available at  http://#{s.addr.last}:4567"
+    system("convert /home/pi/Sites/raspflix_sinatra/backdrop/backdrop.jpg -gravity SouthWest -fill white -pointsize 35 -annotate +125+90 '#{s.addr.last}:4567' /home/pi/Sites/raspflix_sinatra/backdrop/new_bg.jpg && sudo fbi -a -T 1 --noverbose /home/pi/Sites/raspflix_sinatra/backdrop/new_bg.jpg")
   end
 
   Socket.do_not_reverse_lookup = orig
