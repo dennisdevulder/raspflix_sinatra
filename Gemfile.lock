@@ -16,8 +16,10 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
+    daemons (1.2.3)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
+    eventmachine (1.0.8)
     haml (4.0.5)
       tilt
     hashugar (0.0.6)
@@ -64,6 +66,10 @@ GEM
     themoviedb (0.0.24)
       hashugar
       httparty
+    thin (1.6.4)
+      daemons (~> 1.0, >= 1.0.9)
+      eventmachine (~> 1.0, >= 1.0.4)
+      rack (~> 1.0)
     thread_safe (0.3.4)
     tilt (1.4.1)
     trollop (2.1.2)
@@ -90,3 +96,4 @@ DEPENDENCIES
   sinatra-flash
   sqlite3
   themoviedb
+  thin

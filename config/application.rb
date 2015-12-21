@@ -1,6 +1,6 @@
 require 'bundler/setup'
 require "sinatra"
-set :server, 'webrick'
+set :server, 'thin'
 require "sinatra/activerecord"
 require "sinatra/flash"
 
