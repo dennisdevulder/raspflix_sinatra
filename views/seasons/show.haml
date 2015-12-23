@@ -1,10 +1,13 @@
 .col-xs-12.main
   .container.no-padding
-    %h2.sub-header= @movie.name
+    %h2.sub-header
+      = @movie.name
+      = "-"
+      = @season.name
     .col-sm-3.col-xs-12.series
       - if @movie.poster_path.present?
         %img{src: "http://image.tmdb.org/t/p/w396/#{@movie.poster_path}", class: 'fit fullfit'}
       - else
         %img{src: "http://placehold.it/396x594?text=#{@movie.title}", class: 'fit'}
-      - @movie.seasons.each_with_index do |season, index|
-        %a{href: "/series/#{@movie.id}/seasons/#{index+1}", class: 'btn btn-fit btn-default btn-lg toggle-torrents'}= "Season #{index + 1}"
+      - @season.episodes.each_with_index do |season, index|
+        %a{href: "/series/#{@movie.id}/seasons/#{params[:id]}/episodes/#{index+1}", class: 'btn btn-fit btn-default btn-lg toggle-torrents'}= "Episode #{index + 1}"

@@ -1,16 +1,18 @@
 .col-xs-12.main
-  .container
-    %h2.sub-header= title
+  .container.no-padding
+    .col-xs-12.no-padding-right
+      %h2.sub-header= title
     - @movies.each do |movie|
       - if movie.poster_path.present?
         .col-xs-6.col-md-3.item
           %a{href: "/series/#{movie.id}"}
             %img{src: "http://image.tmdb.org/t/p/w396/#{movie.poster_path}", class: 'fit pull-over'}
-            %img{src: "http://placehold.it/396x650", class: 'fit no-opacity'}
+            %img{src: "/assets/placeholder.png", class: 'fit no-opacity'}
       - else
         .col-xs-6.col-md-3.item
           %a{href: "/series/#{movie.id}"}
-            %img{src: "http://placehold.it/396x594?text=#{movie.title}", class: 'fit'}
+            %img{src: "http://placehold.it/396x594?text=#{movie.title}", class: 'fit pull-over'}
+            %img{src: "/assets/placeholder.png", class: 'fit no-opacity'}
 
 :javascript
   $(window).scroll(function() {

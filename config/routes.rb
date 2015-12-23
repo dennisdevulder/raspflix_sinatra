@@ -58,8 +58,6 @@ end
 
 get '/series/:id' do
   @movie = Tmdb::TV.detail(params[:id])
-  @torrents = Kat.quick_search("#{@movie.name} S01E01")
-
   haml :"series/show", layout: :"layouts/series"
 end
 
@@ -70,10 +68,27 @@ end
 
 get '/series/:serie_id/seasons/:id' do
   @movie = Tmdb::TV.detail(params[:serie_id])
-  @season = Tmdb::Season.detail(@movie.id, params[:id])
-  @torrents = TorrentApi.new(:pirate_bay, "#{@movie.name} S01E01").results
+  @season = Tmdb::Season.detail(@movie.id, params[:id].to_i)
+  haml :"seasons/show", layout: :"layouts/series"
+end
 
-  haml :"series/show", layout: :"layouts/series"
+get '/series/:serie_id/seasons/:season_id/episodes/:id' do
+  season = params[:season_id].to_i
+  episode = params[:id].to_i
+
+  @movie = Tmdb::TV.detail(params[:serie_id])
+  @season = Tmdb::Season.detail(@movie.id, season)
+  @episode = Tmdb::Episode.detail(@movie.id, season, episode)
+
+  season_query = season > 9 ? "S#{season}" : "S0#{season}"
+  episode_query = episode > 9 ? "E#{episode}" : "E0#{episode}"
+
+  @query = season_query+episode_query
+
+
+  @torrents = Kat.search("#{@movie.name} #{@query}", {category: "tv"}).search
+
+  haml :"episodes/show", layout: :"layouts/series"
 end
 
 get '/series/search' do
