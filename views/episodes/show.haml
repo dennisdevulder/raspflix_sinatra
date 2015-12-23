@@ -4,12 +4,14 @@
       = @movie.name
       = "-"
       = @season.name
-    .col-sm-3.col-xs-12.series
+    .col-sm-6.col-xs-12.series
       - if @movie.poster_path.present?
         %img{src: "http://image.tmdb.org/t/p/w396/#{@movie.poster_path}", class: 'fit fullfit'}
       - else
         %img{src: "http://placehold.it/396x594?text=#{@movie.title}", class: 'fit'}
+    .col-sm-6.col-xs-12
       %h2= "#{@query} -> #{@episode.name}"
+      %p= @episode.overview
       - if @torrents
         %form{action: "/movies/#{@movie.id}/download", id: "torrent-value"}
           %select{class: 'form-control'}
