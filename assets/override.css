@@ -33,8 +33,17 @@ img.fit{width: 100%;max-height: 500px;}
 
 .no-opacity{
   z-index: 0 !important;
+  opacity: 0;
 }
 
 #torrent-value{
   margin-top: 15px;
+}
+
+.no-padding-right{
+  padding-right: 0px;
+}
+
+.fullfit{
+  max-height: 1000px !important;
 }

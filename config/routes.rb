@@ -11,19 +11,9 @@ end
 get '/movie/:id' do
   @movie = Tmdb::Movie.detail(params[:id])
   @trailers = Tmdb::Movie.trailers(params[:id]).youtube.first(3)
-  @torrents = Kat.quick_search(@movie.title)
+  @torrents = Kat.search(@movie.title, {category: "movies"}).search
 
   haml :"movies/show", layout: :"layouts/application"
-end
-
-get '/movies/:id/play' do
-  movie = Movie.find params[:id]
-  if movie.movie_files.any?
-    movie.play
-    redirect '/player'
-  else
-    redirect '/'
-  end
 end
 
 get '/genres/:id' do

@@ -1,32 +1,37 @@
-.col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
-  %h2.sub-header= @movie.title
-  .col-lg-3.col-xs-6
-    - if @movie.poster_path.present?
-      %img{src: "http://image.tmdb.org/t/p/w396/#{@movie.poster_path}", class: 'fit'}
-    - else
-      %img{src: "http://placehold.it/396x594?text=#{@movie.title}", class: 'fit'}
+.col-xs-12.main.no-padding
+  .container
+    %h2.sub-header
+      = @movie.title
+    .col-sm-3.col-xs-12.no-padding
+      - if @movie.poster_path.present?
+        %img{src: "http://image.tmdb.org/t/p/w396/#{@movie.poster_path}", class: 'fit fullfit'}
+      - else
+        %img{src: "http://placehold.it/396x594?text=#{@movie.title}", class: 'fit'}
 
-    %form{action: "/movies/#{@movie.id}/download", id: "torrent-value"}
-      %select{class: 'form-control'}
-        - @torrents.each do |torrent|
-          %option{value: "http:#{torrent[:download].split('?title')[0]}"}
-            = "[#{torrent[:seeds]}/#{torrent[:leeches]}] " + torrent[:title]
+      - if @torrents
+        %form{action: "/movies/#{@movie.id}/download", id: "torrent-value"}
+          %select{class: 'form-control'}
+            - @torrents.each do |torrent|
+              %option{value: "http:#{torrent[:download].split('?title')[0]}"}
+                = "[#{torrent[:seeds]}/#{torrent[:leeches]}] " + torrent[:title]
 
-    %a{href: '#', class: 'btn btn-fit btn-success btn-lg select-torrent'} Watch
+        %a{href: '#', class: 'btn btn-fit btn-success btn-lg select-torrent'} Watch
+        - @trailers.each_with_index do |trailer, index|
+          %a{href: "//www.youtube.com/watch/#{trailer.source}", class: 'btn btn-fit btn-primary btn-lg'}= "Watch trailer #{index + 1}"
+      - else
+        %form{action: "#", id: 'torrent-value'}
+          %select{class: 'form-control'}
+            %option{value: "#"}
+              No torrents available
 
-  .col-lg-9.col-xs-6.no-padding
-    #slider.col-xs-12.no-padding
-      #carousel-bounding-box
-        #mycarousel.carousel.slide
-          .carousel-inner
-            - @trailers.each_with_index do |trailer, index|
-              .item.no-margin{class: "#{'active' if index == 0}"}
-                %iframe{:allowfullscreen => "true", :frameborder => "0", :height => "550", :src => "//www.youtube.com/embed/#{trailer.source}", :width => "100%"}
-          %a.left.carousel-control{"data-slide" => "prev", :href => "#mycarousel", :role => "button"}
-          %a.right.carousel-control{"data-slide" => "next", :href => "#mycarousel", :role => "button"}
+    .col-xs-12.col-sm-9
+      %h2.no-padding Overview
+      %p= @movie.overview
+      %h2.no-padding Tag line
+      %p= @movie.tagline
+      %h2.no-padding Runtime
+      %p
+        = @movie.runtime
+        Minutes
 
-  :javascript
-    $(document).ready(function(){
-      height = $('img.fit').height();
-      $('iframe').attr('height', height);
-    });
+
