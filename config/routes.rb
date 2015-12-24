@@ -56,12 +56,22 @@ get '/series' do
   haml :"series/index", locals: {title: "Top rated series"}, layout: :"layouts/series"
 end
 
+get '/series/search' do
+  @movies = Tmdb::TV.search(params[:query]).first(20)
+  haml :"series/index", locals: {title: "Search results"}, layout: :"layouts/series"
+end
+
 get '/series/:id' do
   @movie = Tmdb::TV.detail(params[:id])
   haml :"series/show", layout: :"layouts/series"
 end
 
 get '/movie/:id/download' do
+  system "stream #{params[:torrent_url]}"
+  halt 200
+end
+
+get '/series/:serie_id/seasons/:season_id/episodes/:id/download' do
   system "stream #{params[:torrent_url]}"
   halt 200
 end

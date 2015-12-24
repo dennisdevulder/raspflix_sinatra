@@ -11,7 +11,7 @@
       - else
         .col-xs-6.col-md-3.item
           %a{href: "/series/#{movie.id}"}
-            %img{src: "http://placehold.it/396x594?text=#{movie.title}", class: 'fit pull-over'}
+            %img{src: "http://placehold.it/396x594?text=#{begin movie.title rescue movie.name end}", class: 'fit pull-over'}
             %img{src: "/assets/placeholder.png", class: 'fit no-opacity'}
 
 :javascript
