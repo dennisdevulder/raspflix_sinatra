@@ -20,6 +20,9 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
+            %span.icon-bar
+          %button.navbar-toggle.remote-btn{type: 'button'}
+            %a{href: '#'} Remote
           %a.navbar-brand{href: '/'} Raspflix
         .navbar-collapse.collapse
           %form.navbar-form.navbar-right{action: '/search'}
@@ -54,3 +57,4 @@
     .container-fluid
       .row
         = yield
+    = haml :"partials/remote"

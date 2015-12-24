@@ -21,4 +21,17 @@ $(document).ready(function(){
       type: 'GET'
     })
   });
+
+  $('ul.remote_actions a').click(function(e){
+    e.preventDefault();
+    $.ajax({
+      url: $(this).attr('href'),
+      type: 'GET'
+    })
+  });
+
+  $('.remote-btn').click(function(e){
+    e.preventDefault();
+    $('#remote').slideToggle();
+  })
 })
