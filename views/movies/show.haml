@@ -12,7 +12,8 @@
         %form{action: "/movies/#{@movie.id}/download", id: "torrent-value"}
           %select{class: 'form-control'}
             - @torrents.each do |torrent|
-              %option{value: "http:#{torrent[:download].split('?title')[0]}"}
+              - url = "http:#{torrent[:download]}"
+              %option{value: url}
                 = "[#{torrent[:seeds]}/#{torrent[:leeches]}] " + torrent[:title]
 
         %a{href: '#', class: 'btn btn-fit btn-success btn-lg select-torrent'} Watch

@@ -15,9 +15,11 @@ $(document).ready(function(){
 
   $('.select-torrent').click(function(e){
     e.preventDefault();
-    var torrent_url = $('#torrent-value select').val();
+    var url = $('#torrent-value select').val().split('?title=');
+    var torrent_url = url[0];
+    var filename = url[1];
     $.ajax({
-      url: window.location.href + "/download?torrent_url=" + torrent_url,
+      url: window.location.href + "/download?torrent_url=" + torrent_url + '&filename=' + filename,
       type: 'GET'
     })
   });

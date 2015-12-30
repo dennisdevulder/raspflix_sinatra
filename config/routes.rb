@@ -67,7 +67,7 @@ get '/series/:id' do
 end
 
 get '/movie/:id/download' do
-  spawn "stream #{params[:torrent_url]}"
+  spawn "stream #{params[:torrent_url]} #{params[:filename]}"
   halt 200
 end
 
