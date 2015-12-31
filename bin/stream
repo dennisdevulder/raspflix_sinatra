@@ -1,0 +1,15 @@
+#!/bin/bash
+sudo killall omxplayer.bin
+sudo killall omxplayer
+sudo killall peerflix
+
+rm -rf /tmp/omxplayer
+mkfifo /tmp/omxplayer
+
+gen "Downloading subtitles"
+
+subliminal download -l NL "/tmp/$2.avi"
+
+gen "Starting: $2"
+
+peerflix "$1" -q -o -- --subtitles "/tmp/$2.nl.srt" --align center
