@@ -15,7 +15,7 @@ $(document).ready(function(){
 
   $('.select-torrent').click(function(e){
     e.preventDefault();
-    var url = $('#torrent-value select').val().split('?title=');
+    var url = $('#torrent-value select').val().split('?title=[kat.cr]');
     var torrent_url = url[0];
     var filename = url[1];
     $.ajax({
