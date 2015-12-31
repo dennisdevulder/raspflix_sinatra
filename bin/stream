@@ -13,3 +13,5 @@ subliminal download -l NL "/tmp/$2.avi"
 gen "Starting: $2"
 
 peerflix "$1" -q -o -- --subtitles "/tmp/$2.nl.srt" --align center
+
+gen "Finished playing"
