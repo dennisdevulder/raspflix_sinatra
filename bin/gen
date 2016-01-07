@@ -1,0 +1,4 @@
+#!/bin/bash
+sudo killall fbi
+convert /home/pi/Sites/raspflix_sinatra/backdrop/backdrop.jpg -gravity SouthWest -fill white -pointsize 35 -annotate +125+90 "$1" /home/pi/Sites/raspflix_sinatra/backdrop/new_bg.jpg
+sudo fbi -a -T 1 --noverbose /home/pi/Sites/raspflix_sinatra/backdrop/new_bg.jpg &
