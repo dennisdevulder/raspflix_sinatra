@@ -1,4 +1,5 @@
 #!/bin/bash
+cd ${0%/*}
 sudo killall fbi
-convert /home/pi/Sites/raspflix_sinatra/backdrop/backdrop.jpg -gravity SouthWest -fill white -pointsize 35 -annotate +125+90 "$1" /home/pi/Sites/raspflix_sinatra/backdrop/new_bg.jpg
-sudo fbi -a -T 1 --noverbose /home/pi/Sites/raspflix_sinatra/backdrop/new_bg.jpg &
+convert ../backdrop/backdrop.jpg -gravity SouthWest -fill white -pointsize 35 -annotate +125+90 "$1" ../backdrop/new_bg.jpg
+sudo fbi -a -T 1 --noverbose ../backdrop/new_bg.jpg &

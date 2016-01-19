@@ -34,7 +34,7 @@ class Application < Sinatra::Base
   orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true
   UDPSocket.open do |s|
     s.connect '64.233.187.99', 1
-    system("gen '#{s.addr.last}:4567'")
+    system("./bin/gen '#{s.addr.last}:4567'")
   end
 
   Socket.do_not_reverse_lookup = orig
