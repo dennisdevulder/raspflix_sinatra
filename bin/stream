@@ -4,8 +4,8 @@ sudo killall omxplayer.bin
 sudo killall omxplayer
 sudo killall peerflix
 
-rm -rf /tmp/omxplayer
-mkfifo /tmp/omxplayer
+rm -rf /tmp/*
+mkfifo /tmp/omxpipe
 
 ./gen "Downloading subtitles"
 
@@ -13,6 +13,6 @@ subliminal download -l NL "/tmp/$2.avi"
 
 ./gen "Starting: $2"
 
-peerflix "$1" -q -o -- --subtitles "/tmp/$2.nl.srt" --align center
+peerflix "$1" -q -o -- --subtitles "/tmp/$2.nl.srt" --align center --pos 00:00:00 -g
 
 ./gen "Finished playing"
