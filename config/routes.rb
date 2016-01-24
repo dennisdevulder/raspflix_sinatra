@@ -11,7 +11,7 @@ end
 get '/movie/:id' do
   @movie = Tmdb::Movie.detail(params[:id])
   @trailers = Tmdb::Movie.trailers(params[:id]).youtube.first(3)
-  @torrents = Kat.search(@movie.title, {category: "movies"}).search
+  @torrents = ThePirateBay::Search.new(@movie.title).results
 
   haml :"movies/show", layout: :"layouts/application"
 end
@@ -67,7 +67,7 @@ get '/series/:id' do
 end
 
 get '/movie/:id/download' do
-  spawn "./bin/stream #{params[:torrent_url]} #{params[:filename]}"
+  spawn "./bin/stream '#{params[:torrent_url]}' '#{params[:filename]}'"
   halt 200
 end
 

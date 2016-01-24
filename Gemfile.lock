@@ -66,6 +66,8 @@ GEM
     themoviedb (0.0.24)
       hashugar
       httparty
+    thepiratebay (0.2.0)
+      nokogiri
     thin (1.6.4)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
@@ -96,4 +98,8 @@ DEPENDENCIES
   sinatra-flash
   sqlite3
   themoviedb
+  thepiratebay
   thin
+
+BUNDLED WITH
+   1.11.2

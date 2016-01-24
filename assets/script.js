@@ -15,11 +15,12 @@ $(document).ready(function(){
 
   $('.select-torrent').click(function(e){
     e.preventDefault();
-    var url = $('#torrent-value select').val().split('?title=[kat.cr]');
+    var url = $('#torrent-value select').val().split('?tortitle=');
     var torrent_url = url[0];
     var filename = url[1];
+    var url = window.location.href + "/download?torrent_url=" + torrent_url + "&filename=" + filename
     $.ajax({
-      url: window.location.href + "/download?torrent_url=" + torrent_url + '&filename=' + filename,
+      url: url,
       type: 'GET'
     })
   });

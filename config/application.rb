@@ -9,6 +9,7 @@ require "json"
 require "themoviedb"
 require "kat"
 require "./patch/kat.rb"
+require "thepiratebay"
 require "omxplayer"
 require 'open_uri_redirections'
 
