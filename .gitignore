@@ -1,2 +1,4 @@
 tmp/*
+bin/omxplayer.log
+bin/omxplayer.old.log
 db/development.sqlite3
