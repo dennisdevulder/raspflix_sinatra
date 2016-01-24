@@ -10,6 +10,7 @@ require "themoviedb"
 require "kat"
 require "./patch/kat.rb"
 require "thepiratebay"
+require "./patch/tpb.rb"
 require "omxplayer"
 require 'open_uri_redirections'
 
