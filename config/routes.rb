@@ -72,7 +72,7 @@ get '/movie/:id/download' do
 end
 
 get '/series/:serie_id/seasons/:season_id/episodes/:id/download' do
-  spawn "./bin/stream #{params[:torrent_url]} #{params[:filename]}"
+  spawn "./bin/stream '#{params[:torrent_url]}' '#{params[:filename]}'"
   halt 200
 end
 
@@ -96,7 +96,7 @@ get '/series/:serie_id/seasons/:season_id/episodes/:id' do
   @query = season_query+episode_query
 
 
-  @torrents = Kat.search("#{@movie.name} #{@query}", {category: "tv"}).search
+  @torrents = ThePirateBay::Search.new("#{@movie.name} #{@query}").results
 
   haml :"episodes/show", layout: :"layouts/series"
 end
