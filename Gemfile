@@ -9,6 +9,7 @@ gem 'json'
 gem "rake"
 gem "themoviedb"
 gem "kat"
+gem "thepiratebay"
 gem "thin"
 gem "rest-client"
 gem "omxplayer"
