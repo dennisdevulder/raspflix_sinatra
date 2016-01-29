@@ -11,7 +11,7 @@ mkfifo /tmp/omxpipe
 
 subliminal download -l NL "/tmp/$2.avi"
 
-if [ ! -f "/tmp/$2.nl.srt" ]; then
+if [ -f "/tmp/$2.nl.srt" ]; then
   ./gen "Starting: $2"
   peerflix "$1" -q -o -- --subtitles "/tmp/$2.nl.srt" --align center --pos 00:00:00 -g
 else
