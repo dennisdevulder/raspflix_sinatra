@@ -1,2 +1,5 @@
 tmp/*
 db/development.sqlite3
+bin/omxplayer.log
+bin/omxplayer.old.log
+backdrop/new_bg.jpg
