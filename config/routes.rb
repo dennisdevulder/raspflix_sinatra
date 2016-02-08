@@ -11,7 +11,8 @@ end
 get '/movie/:id' do
   @movie = Tmdb::Movie.detail(params[:id])
   @trailers = Tmdb::Movie.trailers(params[:id]).youtube.first(3)
-  @torrents = ThePirateBay::Search.new(@movie.title).results
+  @torrents = Kat.search(@movie.title, {category: 'movies'}).search
+  # @torrents = ThePirateBay::Search.new(@movie.title).results
 
   haml :"movies/show", layout: :"layouts/application"
 end
@@ -96,7 +97,8 @@ get '/series/:serie_id/seasons/:season_id/episodes/:id' do
   @query = season_query+episode_query
 
 
-  @torrents = ThePirateBay::Search.new("#{@movie.name} #{@query}").results
+  @torrents = Kat.search("#{@movie.name} #{@query}", {category: 'tv'}).search
+  # @torrents = ThePirateBay::Search.new("#{@movie.name} #{@query}").results
 
   haml :"episodes/show", layout: :"layouts/series"
 end
